@@ -1,0 +1,25 @@
+{
+    "name": "SG35",
+    "version": "0.0.0",
+    "description": "",
+    "dependencies": {
+        "xinabox-cs11": "*",
+        "pxt-OD01": "*"
+    },
+    "files": [
+        "README.md",
+        "ix03.cpp",
+        "ix03.h",
+        "sg35.h",
+        "sg35.cpp",
+        "sg35.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "supportedTargets": [
+        "maker"
+    ],
+    "preferredEditor": "blocksprj"
+}
