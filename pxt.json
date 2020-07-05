@@ -1,10 +1,9 @@
 {
     "name": "SG35",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "",
     "dependencies": {
-        "xinabox-cs11": "*",
-        "pxt-OD01": "*"
+        "core": "*"
     },
     "files": [
         "README.md",
