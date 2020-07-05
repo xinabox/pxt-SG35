@@ -213,30 +213,37 @@ bool xIX03::digitalRead(uint8_t pin)
 
 void xIX03::writeByte(uint8_t reg, uint8_t val)
 {
+    uint8_t k[2] = {reg << 3, val};
 #ifdef CODAL_I2C
     auto sda = LOOKUP_PIN(SDA);
     auto scl = LOOKUP_PIN(SCL);
     codal::I2C *i2c = pxt::getI2C(sda, scl);
+    i2c->write(i2cAddr, (uint8_t *)k, 2, false);
+#else
+    uBit.i2c.write(i2cAddr, (const char *)k, 2, false);
 #endif
-    uint8_t k[2] = {reg<<3, val};
-    i2c->write(i2cAddr, (uint8_t*)k, 2, false);
-    //i2cwrite(i2cAddr, reg << 3, (uint8_t*)&val, 1);
 }
 
 uint8_t xIX03::readByte(uint8_t reg)
 {
-    uint8_t val[1] = {reg<<3};
+    uint8_t val[1] = {reg << 3};
+#ifdef CODAL_I2C
     uint8_t data;
+#else
+    char data;
+#endif
+
 #ifdef CODAL_I2C
     auto sda = LOOKUP_PIN(SDA);
     auto scl = LOOKUP_PIN(SCL);
     codal::I2C *i2c = pxt::getI2C(sda, scl);
-#endif
-    i2c->write(i2cAddr, (uint8_t*)val, 1, true);
+    i2c->write(i2cAddr, (uint8_t *)val, 1, true);
     i2c->read(i2cAddr, &data, 1, false);
-    // uint8_t data[1];
-    // i2cread(i2cAddr, reg << 3, data, 1);
-    return data;
+#else
+    uBit.i2c.write(i2cAddr, (const char *)val, 1, true);
+    uBit.i2c.read(i2cAddr, &data, 1, false);
+#endif
+    return (uint8_t)data;
 }
 
 void xIX03::writeBlock(uint8_t reg, uint8_t *val, uint8_t len)
