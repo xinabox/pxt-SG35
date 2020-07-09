@@ -38,23 +38,30 @@ namespace SG35 {
     }
 
     function init() {
-        if (initialized) return;
-        initialized = true;
 
-        onDataReceived(() => {
-            let rcv = read()
-            if (rcv) {
-                onReceivedDataHandler(pm1(), pm25(), pm10())
-            }
-            rcv = false
+        startParallel(function(){
+                while(true)
+                {
+                    let rcv = read()
+                    if(rcv)
+                    {
+                        onReceivedDataHandler(pm1(), pm25(), pm10())
+                    }
+                    basic.pause(1)
+                }
         })
     }
 
     //% block="SG35 on received "
     //% draggableParameters=reporter
     export function onReceivedData(cb: (receivedPM1: number,receivedPM25: number,receivedPM10: number) => void): void {
-        init();
+        init()
         onReceivedDataHandler = cb
+    }
+
+    //% shim=parall::startParallel
+    export function startParallel(u: () => void) {
+        return 1;
     }
 
     begin()

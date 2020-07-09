@@ -12,14 +12,17 @@
         "ix03.h",
         "sg35.h",
         "sg35.cpp",
-        "sg35.ts"
+        "sg35.ts",
+        "parallel.h",
+        "parallel.cpp"
     ],
     "testFiles": [
         "test.ts"
     ],
     "public": true,
     "supportedTargets": [
-        "maker"
+        "maker",
+        "microbit"
     ],
     "preferredEditor": "blocksprj"
 }
