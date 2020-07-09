@@ -13,3 +13,4 @@ Gemfile
 _config.yml
 tsconfig.json
 .vscode
+Makefile
