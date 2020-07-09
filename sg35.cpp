@@ -15,7 +15,7 @@ PMS::PMS()
 
 void PMS::begin()
 {
-    //_stream->pinMode(0, 1);
+    _stream->pinMode(0, 1);
     for (uint8_t i = 0; i < 4; i++)
     {
         _stream->pinMode(i, 1);
