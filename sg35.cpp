@@ -15,12 +15,12 @@ PMS::PMS()
 
 void PMS::begin()
 {
+    _stream->begin(9600);
     for (uint8_t i = 0; i < 4; i++)
     {
         _stream->pinMode(i, 1);
         _stream->digitalWrite(i, 1);
     }
-    _stream->begin(9600);
 }
 
 // Standby mode. For low power consumption and prolong the life of the sensor.
