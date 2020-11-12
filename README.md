@@ -1,4 +1,4 @@
-# pxt-SN01
+# pxt-SG35
 
 ## License
 MIT
