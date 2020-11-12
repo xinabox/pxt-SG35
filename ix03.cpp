@@ -1,5 +1,11 @@
 #include "ix03.h"
 
+#if MICROBIT_CODAL
+#define BUFFER_TYPE uint8_t*
+#else
+#define BUFFER_TYPE char*
+#endif
+
 uint8_t i2cwrite(uint16_t address, uint8_t reg, uint8_t *data, int len)
 {
     int i2c_error_status = 0;
@@ -17,7 +23,7 @@ uint8_t i2cwrite(uint16_t address, uint8_t reg, uint8_t *data, int len)
 #ifdef CODAL_I2C
     return i2c_error_status = i2c->write((uint16_t)address, (uint8_t *)&val, len + 1, false);
 #else
-    return i2c_error_status = uBit.i2c.write(address, (const char *)&val, len + 1, false);
+    return i2c_error_status = uBit.i2c.write(address, (BUFFER_TYPE)val, len + 1, false);
 #endif
 }
 
@@ -34,13 +40,13 @@ uint8_t i2cread(uint16_t address, uint8_t reg, uint8_t *data, int len)
 #ifdef CODAL_I2C
     i2c_error_status = i2c->write((uint16_t)address, (uint8_t*)&reg, 1, true);
 #else
-    i2c_error_status = uBit.i2c.write(address, (const char *)&val, 1, true);
+    i2c_error_status = uBit.i2c.write(address, (BUFFER_TYPE)&val, 1, true);
 #endif
 
 #ifdef CODAL_I2C
     return i2c_error_status = i2c->read((uint16_t)address, (uint8_t*)&data, len, false);
 #else
-    return i2c_error_status = uBit.i2c.read(address, (char *)data, len, false);
+    return i2c_error_status = uBit.i2c.read(address, (BUFFER_TYPE)data, len, false);
 #endif
 }
 
@@ -220,7 +226,7 @@ void xIX03::writeByte(uint8_t reg, uint8_t val)
     codal::I2C *i2c = pxt::getI2C(sda, scl);
     i2c->write(i2cAddr, (uint8_t *)k, 2, false);
 #else
-    uBit.i2c.write(i2cAddr, (const char *)k, 2, false);
+    uBit.i2c.write(i2cAddr, (BUFFER_TYPE)k, 2, false);
 #endif
 }
 
@@ -228,9 +234,9 @@ uint8_t xIX03::readByte(uint8_t reg)
 {
     uint8_t val[1] = {reg << 3};
 #ifdef CODAL_I2C
-    uint8_t data;
+    uint8_t data[1];
 #else
-    char data;
+    char data[1];
 #endif
 
 #ifdef CODAL_I2C
@@ -240,10 +246,10 @@ uint8_t xIX03::readByte(uint8_t reg)
     i2c->write(i2cAddr, (uint8_t *)val, 1, true);
     i2c->read(i2cAddr, &data, 1, false);
 #else
-    uBit.i2c.write(i2cAddr, (const char *)val, 1, true);
-    uBit.i2c.read(i2cAddr, &data, 1, false);
+    uBit.i2c.write(i2cAddr, (BUFFER_TYPE)val, 1, true);
+    uBit.i2c.read(i2cAddr, (BUFFER_TYPE)data, 1, false);
 #endif
-    return (uint8_t)data;
+    return (uint8_t)data[0];
 }
 
 void xIX03::writeBlock(uint8_t reg, uint8_t *val, uint8_t len)
