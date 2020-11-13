@@ -244,7 +244,7 @@ uint8_t xIX03::readByte(uint8_t reg)
     auto scl = LOOKUP_PIN(SCL);
     codal::I2C *i2c = pxt::getI2C(sda, scl);
     i2c->write(i2cAddr, (uint8_t *)val, 1, true);
-    i2c->read(i2cAddr, &data, 1, false);
+    i2c->read(i2cAddr, (uint8_t *)&data, 1, false);
 #else
     uBit.i2c.write(i2cAddr, (BUFFER_TYPE)val, 1, true);
     uBit.i2c.read(i2cAddr, (BUFFER_TYPE)data, 1, false);
