@@ -33,11 +33,13 @@ namespace SG35 {
     }
 	
 	//%shim=sg35::turnPowerSavingModeOn
+    //%block="SG35 sleep"
 	export function sleepSG35(): void{
 		return;
 	}
 	
 	//%shim=sg35::wakeUpSG35
+    //%block="SG35 wake up"
 	export function wakeSG35(): void{
 		return;
 	}
