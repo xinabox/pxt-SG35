@@ -217,6 +217,18 @@ namespace sg35
     {
         return data.PM_AE_UG_10_0;
     }
+	
+	//%
+	void turnPowerSavingModeOn()
+	{
+		pms->sleep();
+	}
+	
+	//%
+	void wakeUpSG35()
+	{
+		pms->wakeUp();
+	}
 
     //%
     void onDataReceived(Action body)

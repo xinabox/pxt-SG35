@@ -31,6 +31,16 @@ namespace SG35 {
     export function pm10(): number {
         return 1
     }
+	
+	//%shim=sg35::turnPowerSavingModeOn
+	export function sleepSG35(): void{
+		return;
+	}
+	
+	//%shim=sg35::wakeUpSG35
+	export function wakeSG35(): void{
+		return;
+	}
 
     //%shim=sg35::onDataReceived
     function onDataReceived(body: Action): void {
